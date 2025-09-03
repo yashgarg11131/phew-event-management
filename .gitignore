@@ -58,9 +58,9 @@ Thumbs.db
 # Logs
 *.log
 
-# Database
-*.db
-*.sqlite3
+# Database (commented out to include in deployment)
+# *.db
+# *.sqlite3
 
 # Temporary files
 *.tmp

@@ -15,8 +15,16 @@ db.init_app(app)
 mail = Mail(app)
 
 # Create database tables
-with app.app_context():
-    db.create_all()
+def init_db():
+    with app.app_context():
+        try:
+            db.create_all()
+            print("Database tables created successfully!")
+        except Exception as e:
+            print(f"Error creating database tables: {e}")
+
+# Initialize database
+init_db()
 
 # Event packages data
 EVENT_PACKAGES = {
@@ -140,33 +148,44 @@ def add_to_cart(service_key):
     service = SERVICES[service_key]
     session_id = get_session_id()
     
-    # Check if item already in cart
-    existing_item = CartItem.query.filter_by(
-        session_id=session_id, 
-        service_name=service['name']
-    ).first()
-    
-    if existing_item:
-        flash('Item already in cart!', 'info')
-    else:
-        cart_item = CartItem(
-            session_id=session_id,
-            service_name=service['name'],
-            service_price=service['price'],
-            service_description=service['description']
-        )
-        db.session.add(cart_item)
-        db.session.commit()
-        flash('Added to cart successfully!', 'success')
+    try:
+        # Check if item already in cart
+        existing_item = CartItem.query.filter_by(
+            session_id=session_id, 
+            service_name=service['name']
+        ).first()
+        
+        if existing_item:
+            flash('Item already in cart!', 'info')
+        else:
+            cart_item = CartItem(
+                session_id=session_id,
+                service_name=service['name'],
+                service_price=service['price'],
+                service_description=service['description']
+            )
+            db.session.add(cart_item)
+            db.session.commit()
+            flash('Added to cart successfully!', 'success')
+    except Exception as e:
+        # If database error, reinitialize
+        init_db()
+        flash('Database error. Please try again.', 'error')
     
     return redirect(url_for('services'))
 
 @app.route('/cart')
 def cart():
     session_id = get_session_id()
-    cart_items = CartItem.query.filter_by(session_id=session_id).all()
-    total = sum(item.service_price for item in cart_items)
-    return render_template('cart.html', cart_items=cart_items, total=total)
+    try:
+        cart_items = CartItem.query.filter_by(session_id=session_id).all()
+        total = sum(item.service_price for item in cart_items)
+        return render_template('cart.html', cart_items=cart_items, total=total)
+    except Exception as e:
+        # If database error, reinitialize and return empty cart
+        init_db()
+        flash('Cart temporarily unavailable. Please try again.', 'info')
+        return render_template('cart.html', cart_items=[], total=0)
 
 @app.route('/remove_from_cart/<int:item_id>')
 def remove_from_cart(item_id):
