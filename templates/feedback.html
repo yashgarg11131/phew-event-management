@@ -1,0 +1,220 @@
+{% extends "base.html" %}
+
+{% block title %}Customer Feedback - Phew !! Event Management{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="bg-gradient-to-r from-primary to-secondary py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-5xl font-bold text-white mb-4">
+            <i class="fas fa-comments mr-4"></i>Customer Feedback
+        </h1>
+        <p class="text-xl text-white opacity-90">
+            Share your experience and read what others have to say about our services
+        </p>
+    </div>
+</section>
+
+<!-- Feedback Form and Reviews -->
+<section class="py-16 bg-gradient-to-br from-yellow-50 to-orange-50 min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            
+            <!-- Feedback Form -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                <div class="bg-gradient-to-r from-primary to-secondary p-6">
+                    <h2 class="text-2xl font-bold text-white">
+                        <i class="fas fa-edit mr-2"></i>Share Your Experience
+                    </h2>
+                    <p class="text-white opacity-90 mt-2">Help us improve our services with your valuable feedback</p>
+                </div>
+                
+                <form method="POST" class="p-6 space-y-6">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
+                            <i class="fas fa-user mr-1"></i>Your Name *
+                        </label>
+                        <input type="text" id="name" name="name" required
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition duration-300"
+                               placeholder="Enter your full name">
+                    </div>
+
+                    <div>
+                        <label for="rating" class="block text-sm font-medium text-gray-700 mb-2">
+                            <i class="fas fa-star mr-1"></i>Rating *
+                        </label>
+                        <div class="relative">
+                            <select id="rating" name="rating" required
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition duration-300 appearance-none">
+                                <option value="">Select a rating</option>
+                                <option value="5">⭐⭐⭐⭐⭐ - Excellent (5 stars)</option>
+                                <option value="4">⭐⭐⭐⭐ - Very Good (4 stars)</option>
+                                <option value="3">⭐⭐⭐ - Good (3 stars)</option>
+                                <option value="2">⭐⭐ - Fair (2 stars)</option>
+                                <option value="1">⭐ - Poor (1 star)</option>
+                            </select>
+                            <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                                <i class="fas fa-chevron-down text-gray-400"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-gray-700 mb-2">
+                            <i class="fas fa-comment mr-1"></i>Your Feedback *
+                        </label>
+                        <textarea id="message" name="message" rows="6" required
+                                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition duration-300 resize-none"
+                                  placeholder="Tell us about your experience with our event management services..."></textarea>
+                        <p class="text-xs text-gray-500 mt-1">Please provide detailed feedback to help us improve our services</p>
+                    </div>
+
+                    <!-- Guidelines -->
+                    <div class="bg-blue-50 rounded-lg p-4">
+                        <h3 class="text-sm font-semibold text-blue-900 mb-2">
+                            <i class="fas fa-info-circle mr-1"></i>Feedback Guidelines
+                        </h3>
+                        <ul class="text-xs text-blue-800 space-y-1">
+                            <li>• Be honest and specific about your experience</li>
+                            <li>• Mention which services you used</li>
+                            <li>• Highlight what went well and areas for improvement</li>
+                            <li>• Keep your feedback constructive and respectful</li>
+                        </ul>
+                    </div>
+
+                    <button type="submit" 
+                            class="w-full bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-accent text-white py-4 px-6 rounded-lg font-semibold text-lg transition duration-300 transform hover:scale-105 shadow-lg">
+                        <i class="fas fa-paper-plane mr-2"></i>Submit Feedback
+                    </button>
+                </form>
+            </div>
+
+            <!-- Customer Reviews -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                <div class="bg-gradient-to-r from-accent to-dark p-6">
+                    <h2 class="text-2xl font-bold text-white">
+                        <i class="fas fa-users mr-2"></i>What Our Customers Say
+                    </h2>
+                    <p class="text-white opacity-90 mt-2">Real experiences from our valued clients</p>
+                </div>
+                
+                <div class="p-6">
+                    {% if feedback_list %}
+                        <div class="space-y-6">
+                            {% for review in feedback_list %}
+                            <div class="border-b pb-6 last:border-b-0">
+                                <div class="flex items-center justify-between mb-3">
+                                    <div class="flex items-center">
+                                        <div class="w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center mr-4">
+                                            <i class="fas fa-user text-white"></i>
+                                        </div>
+                                        <div>
+                                            <h3 class="font-semibold text-gray-900">{{ review.name }}</h3>
+                                            <p class="text-sm text-gray-500">{{ review.date_submitted.strftime('%B %d, %Y') }}</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Star Rating -->
+                                    <div class="flex items-center">
+                                        {% for i in range(1, 6) %}
+                                            {% if i <= review.rating %}
+                                                <i class="fas fa-star text-yellow-400"></i>
+                                            {% else %}
+                                                <i class="fas fa-star text-gray-300"></i>
+                                            {% endif %}
+                                        {% endfor %}
+                                        <span class="ml-2 text-sm font-medium text-gray-600">({{ review.rating }}/5)</span>
+                                    </div>
+                                </div>
+                                
+                                <p class="text-gray-700 leading-relaxed">{{ review.message }}</p>
+                                
+                                {% if review.rating >= 4 %}
+                                <div class="mt-3 inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                    <i class="fas fa-thumbs-up mr-1"></i>Highly Recommended
+                                </div>
+                                {% endif %}
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <!-- No Reviews Yet -->
+                        <div class="text-center py-12">
+                            <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-comments text-3xl text-gray-400"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-2">No Reviews Yet</h3>
+                            <p class="text-gray-600 mb-6">Be the first to share your experience with our event management services!</p>
+                            <div class="bg-gradient-to-r from-primary to-secondary text-white px-6 py-3 rounded-lg inline-block">
+                                <i class="fas fa-star mr-2"></i>Your review matters to us
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Customer Testimonials Statistics -->
+        {% if feedback_list %}
+        <div class="mt-12 bg-white rounded-xl shadow-lg p-8">
+            <h3 class="text-2xl font-bold text-gray-900 text-center mb-8">Customer Satisfaction Overview</h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                {% set total_reviews = feedback_list|length %}
+                {% set five_star = feedback_list|selectattr("rating", "equalto", 5)|list|length %}
+                {% set four_star = feedback_list|selectattr("rating", "equalto", 4)|list|length %}
+                {% set avg_rating = (feedback_list|sum(attribute="rating") / total_reviews)|round(1) if total_reviews > 0 else 0 %}
+                
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-star text-yellow-600 text-2xl"></i>
+                    </div>
+                    <div class="text-3xl font-bold text-accent mb-2">{{ avg_rating }}</div>
+                    <div class="text-gray-600">Average Rating</div>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-users text-green-600 text-2xl"></i>
+                    </div>
+                    <div class="text-3xl font-bold text-accent mb-2">{{ total_reviews }}</div>
+                    <div class="text-gray-600">Total Reviews</div>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-thumbs-up text-blue-600 text-2xl"></i>
+                    </div>
+                    <div class="text-3xl font-bold text-accent mb-2">{{ ((five_star + four_star) / total_reviews * 100)|round(0)|int if total_reviews > 0 else 0 }}%</div>
+                    <div class="text-gray-600">Satisfied Customers</div>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-medal text-purple-600 text-2xl"></i>
+                    </div>
+                    <div class="text-3xl font-bold text-accent mb-2">{{ five_star }}</div>
+                    <div class="text-gray-600">5-Star Reviews</div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Call to Action -->
+        <div class="mt-12 bg-gradient-to-r from-primary to-secondary rounded-xl p-8 text-center text-white">
+            <h3 class="text-2xl font-bold mb-4">Ready to Create Your Perfect Event?</h3>
+            <p class="text-lg opacity-90 mb-6">Join hundreds of satisfied customers who trusted us with their special moments</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="{{ url_for('services') }}" 
+                   class="bg-white text-accent px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300 transform hover:scale-105">
+                    <i class="fas fa-calendar-alt mr-2"></i>Book Your Event
+                </a>
+                <a href="{{ url_for('contact') }}" 
+                   class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-accent transition duration-300 transform hover:scale-105">
+                    <i class="fas fa-phone mr-2"></i>Get Free Quote
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

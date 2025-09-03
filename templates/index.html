@@ -1,0 +1,276 @@
+{% extends "base.html" %}
+
+{% block title %}Phew !! - Making Your Events Memorable{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="relative bg-gradient-to-r from-primary via-secondary to-accent py-20 overflow-hidden">
+    <!-- Background decoration -->
+    <div class="absolute inset-0 bg-black bg-opacity-10"></div>
+    <div class="absolute top-0 left-0 w-full h-full">
+        <div class="absolute top-10 left-10 w-20 h-20 bg-white bg-opacity-20 rounded-full animate-pulse"></div>
+        <div class="absolute top-32 right-20 w-16 h-16 bg-white bg-opacity-15 rounded-full animate-pulse delay-1000"></div>
+        <div class="absolute bottom-20 left-1/4 w-24 h-24 bg-white bg-opacity-10 rounded-full animate-pulse delay-500"></div>
+    </div>
+    
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center">
+            <!-- Logo -->
+            <div class="flex justify-center mb-8">
+                <div class="w-32 h-32 bg-white rounded-2xl flex items-center justify-center shadow-2xl overflow-hidden">
+                    <img src="{{ url_for('static', filename='images/logo.jpeg') }}" alt="Phew! Logo" class="w-full h-full object-cover">
+                </div>
+            </div>
+            
+            <!-- Brand Name -->
+            <h1 class="text-6xl md:text-8xl font-bold text-white mb-6 drop-shadow-lg">
+                <!-- Phew !! -->
+            </h1>
+            
+            <!-- Tagline -->
+            <p class="text-xl md:text-2xl text-white mb-8 max-w-3xl mx-auto leading-relaxed">
+                Making Your Events Memorable with Professional Event Management Services
+            </p>
+            
+            <!-- CTA Buttons -->
+            <div class="flex flex-col sm:flex-row justify-center gap-4 mb-12">
+                <a href="{{ url_for('services') }}" class="bg-white text-accent px-8 py-4 rounded-full font-semibold text-lg hover:bg-gray-100 transition duration-300 shadow-lg transform hover:scale-105">
+                    <i class="fas fa-calendar-alt mr-2"></i>Explore Services
+                </a>
+                <a href="{{ url_for('contact') }}" class="border-2 border-white text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white hover:text-accent transition duration-300 shadow-lg transform hover:scale-105">
+                    <i class="fas fa-phone mr-2"></i>Get Quote
+                </a>
+            </div>
+            
+            <!-- Stats -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-white mb-2">500+</div>
+                    <div class="text-white opacity-90">Events Organized</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-white mb-2">100+</div>
+                    <div class="text-white opacity-90">Happy Clients</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-white mb-2">7</div>
+                    <div class="text-white opacity-90">Service Packages</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-white mb-2">24/7</div>
+                    <div class="text-white opacity-90">Support</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services Preview Section -->
+<section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl font-bold text-gray-900 mb-4">Our Complete Services</h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                From complete event packages to professional service providers - we have everything you need for your perfect event.
+            </p>
+        </div>
+        
+        <!-- Service Toggle -->
+        <div class="flex justify-center mb-12">
+            <div class="bg-gray-100 rounded-full p-1 inline-flex">
+                <button onclick="showServiceType('packages')" id="packages-toggle" class="service-toggle active px-6 py-2 rounded-full font-semibold transition duration-300">
+                    <i class="fas fa-gift mr-2"></i>Event Packages
+                </button>
+                <button onclick="showServiceType('providers')" id="providers-toggle" class="service-toggle px-6 py-2 rounded-full font-semibold transition duration-300">
+                    <i class="fas fa-users mr-2"></i>Service Providers
+                </button>
+            </div>
+        </div>
+        
+        <!-- Event Packages Preview -->
+        <div id="packages-preview" class="packages-content">
+            <!-- Event Packages Image -->
+            <div class="flex justify-center mb-12">
+                <img src="{{ url_for('static', filename='images/events.png') }}" alt="Event Packages" class="max-w-4xl w-full rounded-lg shadow-lg">
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <!-- Birthday Package -->
+                <div class="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-lg p-6 shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-105">
+                    <div class="text-center mb-4">
+                        <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-birthday-cake text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900">Birthday Parties</h3>
+                        <p class="text-gray-600 mt-2">Complete birthday celebration packages with decorations, entertainment, and more.</p>
+                    </div>
+                </div>
+                
+                <!-- Wedding Package -->
+                <div class="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-lg p-6 shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-105">
+                    <div class="text-center mb-4">
+                        <div class="w-16 h-16 bg-secondary rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-heart text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900">Wedding Ceremonies</h3>
+                        <p class="text-gray-600 mt-2">Comprehensive wedding packages with venue decoration, catering, and coordination.</p>
+                    </div>
+                </div>
+                
+                <!-- Corporate Package -->
+                <div class="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-lg p-6 shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-105">
+                    <div class="text-center mb-4">
+                        <div class="w-16 h-16 bg-accent rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-briefcase text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900">Corporate Events</h3>
+                        <p class="text-gray-600 mt-2">Professional corporate event management for conferences, meetings, and team building.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Service Providers Preview -->
+        <div id="providers-preview" class="providers-content hidden">
+            <!-- Service Providers Image -->
+            <div class="flex justify-center mb-12">
+                <img src="{{ url_for('static', filename='images/services.png') }}" alt="Service Providers" class="max-w-4xl w-full rounded-lg shadow-lg">
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <!-- Bartenders -->
+                <div class="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-lg p-6 shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-105">
+                    <div class="text-center mb-4">
+                        <div class="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-cocktail text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900">Expert Bartenders</h3>
+                        <p class="text-accent font-bold text-lg">₹{{ "%.0f"|format(service_providers.bartenders.price) }}/hour</p>
+                        <p class="text-gray-600 mt-2">Professional mixologists for your event bar service.</p>
+                    </div>
+                </div>
+                
+                <!-- Waiters -->
+                <div class="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-lg p-6 shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-105">
+                    <div class="text-center mb-4">
+                        <div class="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-user-tie text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900">Professional Waiters</h3>
+                        <p class="text-accent font-bold text-lg">₹{{ "%.0f"|format(service_providers.waiters.price) }}/hour</p>
+                        <p class="text-gray-600 mt-2">Experienced waitstaff for seamless food and beverage service.</p>
+                    </div>
+                </div>
+                
+                <!-- Musicians -->
+                <div class="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-lg p-6 shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-105">
+                    <div class="text-center mb-4">
+                        <div class="w-16 h-16 bg-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-music text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900">Live Musicians</h3>
+                        <p class="text-accent font-bold text-lg">₹{{ "%.0f"|format(service_providers.musicians.price) }}/event</p>
+                        <p class="text-gray-600 mt-2">Talented musicians for live entertainment at your event.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center">
+            <a href="{{ url_for('services') }}" class="bg-gradient-to-r from-primary to-secondary text-white px-8 py-4 rounded-full font-semibold text-lg hover:from-secondary hover:to-accent transition duration-300 shadow-lg transform hover:scale-105">
+                <i class="fas fa-arrow-right mr-2"></i>View All Services
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Why Choose Us Section -->
+<section class="py-16 bg-gradient-to-br from-yellow-50 to-orange-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl font-bold text-gray-900 mb-4">Why Choose Phew !! ?</h2>
+            <p class="text-xl text-gray-600">We're your trusted partner in creating unforgettable experiences</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="text-center">
+                <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-users text-white text-2xl"></i>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">Expert Team</h3>
+                <p class="text-gray-600">Professional event planners with years of experience</p>
+            </div>
+            
+            <div class="text-center">
+                <div class="w-16 h-16 bg-secondary rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-clock text-white text-2xl"></i>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">On-Time Delivery</h3>
+                <p class="text-gray-600">We ensure your events are executed flawlessly and on schedule</p>
+            </div>
+            
+            <div class="text-center">
+                <div class="w-16 h-16 bg-accent rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-dollar-sign text-white text-2xl"></i>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">Competitive Pricing</h3>
+                <p class="text-gray-600">Quality services at affordable prices for every budget</p>
+            </div>
+            
+            <div class="text-center">
+                <div class="w-16 h-16 bg-dark rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-headset text-white text-2xl"></i>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">24/7 Support</h3>
+                <p class="text-gray-600">Round-the-clock customer support for all your needs</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-16 bg-gradient-to-r from-primary to-secondary">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-4xl font-bold text-white mb-4">Ready to Plan Your Next Event?</h2>
+        <p class="text-xl text-white mb-8 opacity-90">Let us handle the details while you enjoy the celebration</p>
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <a href="{{ url_for('services') }}" class="bg-white text-accent px-8 py-4 rounded-full font-semibold text-lg hover:bg-gray-100 transition duration-300 shadow-lg transform hover:scale-105">
+                <i class="fas fa-shopping-cart mr-2"></i>Browse Packages
+            </a>
+            <a href="{{ url_for('contact') }}" class="border-2 border-white text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white hover:text-accent transition duration-300 shadow-lg transform hover:scale-105">
+                <i class="fas fa-envelope mr-2"></i>Contact Us
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- JavaScript for service toggle -->
+<script>
+    function showServiceType(type) {
+        // Hide all content
+        document.getElementById('packages-preview').classList.add('hidden');
+        document.getElementById('providers-preview').classList.add('hidden');
+        
+        // Remove active class from all toggles
+        document.getElementById('packages-toggle').classList.remove('active');
+        document.getElementById('providers-toggle').classList.remove('active');
+        
+        // Show selected content and activate toggle
+        if (type === 'packages') {
+            document.getElementById('packages-preview').classList.remove('hidden');
+            document.getElementById('packages-toggle').classList.add('active');
+        } else if (type === 'providers') {
+            document.getElementById('providers-preview').classList.remove('hidden');
+            document.getElementById('providers-toggle').classList.add('active');
+        }
+    }
+</script>
+
+<style>
+    .service-toggle {
+        @apply bg-transparent text-gray-700 hover:bg-primary hover:text-white;
+    }
+    
+    .service-toggle.active {
+        @apply bg-primary text-white shadow-md;
+    }
+</style>
+{% endblock %}

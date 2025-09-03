@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+
+{% block title %}Shopping Cart - Phew !! Event Management{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="bg-gradient-to-r from-primary to-secondary py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-5xl font-bold text-white mb-4">
+            <i class="fas fa-shopping-cart mr-4"></i>Your Cart
+        </h1>
+        <p class="text-xl text-white opacity-90">
+            Review your selected event packages before checkout
+        </p>
+    </div>
+</section>
+
+<!-- Cart Content -->
+<section class="py-16 bg-gradient-to-br from-yellow-50 to-orange-50 min-h-screen">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {% if cart_items %}
+            <!-- Cart Items -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-8">
+                <div class="bg-gradient-to-r from-primary to-secondary p-6">
+                    <h2 class="text-2xl font-bold text-white">Selected Packages</h2>
+                </div>
+                
+                <div class="divide-y divide-gray-200">
+                    {% for item in cart_items %}
+                    <div class="p-6 hover:bg-gray-50 transition duration-300">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                            <div class="flex-1">
+                                <div class="flex items-start">
+                                    <div class="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+                                        {% if 'Birthday' in item.service_name %}
+                                            <i class="fas fa-birthday-cake text-white text-xl"></i>
+                                        {% elif 'Baby' in item.service_name %}
+                                            <i class="fas fa-baby text-white text-xl"></i>
+                                        {% elif 'Wedding' in item.service_name %}
+                                            <i class="fas fa-heart text-white text-xl"></i>
+                                        {% elif 'Pre-Wedding' in item.service_name %}
+                                            <i class="fas fa-rings-wedding text-white text-xl"></i>
+                                        {% elif 'Corporate' in item.service_name %}
+                                            <i class="fas fa-briefcase text-white text-xl"></i>
+                                        {% elif 'House' in item.service_name %}
+                                            <i class="fas fa-home text-white text-xl"></i>
+                                        {% elif 'Anniversary' in item.service_name %}
+                                            <i class="fas fa-heart text-white text-xl"></i>
+                                        {% else %}
+                                            <i class="fas fa-star text-white text-xl"></i>
+                                        {% endif %}
+                                    </div>
+                                    <div class="flex-1">
+                                        <h3 class="text-xl font-semibold text-gray-900 mb-2">{{ item.service_name }}</h3>
+                                        <p class="text-gray-600 text-sm mb-3">{{ item.service_description }}</p>
+                                        <div class="flex items-center text-sm text-gray-500">
+                                            <i class="fas fa-clock mr-1"></i>
+                                            Added on {{ item.date_added.strftime('%B %d, %Y at %I:%M %p') }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4 md:mt-0 md:ml-6 flex items-center justify-between md:justify-end">
+                                <div class="text-right mr-6">
+                                    <div class="text-2xl font-bold text-accent">₹{{ "%.2f"|format(item.service_price) }}</div>
+                                </div>
+                                <a href="{{ url_for('remove_from_cart', item_id=item.id) }}" 
+                                   class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition duration-300 flex items-center"
+                                   onclick="return confirm('Are you sure you want to remove this item from cart?')">
+                                    <i class="fas fa-trash mr-2"></i>Remove
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Cart Summary -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-8">
+                <div class="bg-gradient-to-r from-accent to-dark p-6">
+                    <h2 class="text-2xl font-bold text-white">Order Summary</h2>
+                </div>
+                
+                <div class="p-6">
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center text-lg">
+                            <span class="text-gray-600">Subtotal ({{ cart_items|length }} {% if cart_items|length == 1 %}item{% else %}items{% endif %})</span>
+                            <span class="font-semibold text-gray-900">₹{{ "%.2f"|format(total) }}</span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center text-lg">
+                            <span class="text-gray-600">Service Fee</span>
+                            <span class="font-semibold text-gray-900">₹0.00</span>
+                        </div>
+                        
+                        <div class="border-t pt-4">
+                            <div class="flex justify-between items-center text-xl">
+                                <span class="font-bold text-gray-900">Total</span>
+                                <span class="font-bold text-accent text-2xl">₹{{ "%.2f"|format(total) }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Checkout Actions -->
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="{{ url_for('services') }}" 
+                       class="flex-1 bg-gray-500 hover:bg-gray-600 text-white py-4 px-6 rounded-lg font-semibold text-center transition duration-300">
+                        <i class="fas fa-arrow-left mr-2"></i>Continue Shopping
+                    </a>
+                    <a href="{{ url_for('checkout') }}" 
+                       class="flex-1 bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-accent text-white py-4 px-6 rounded-lg font-semibold text-center transition duration-300 transform hover:scale-105">
+                        <i class="fas fa-credit-card mr-2"></i>Proceed to Checkout
+                    </a>
+                </div>
+                
+                <div class="mt-6 text-center">
+                    <div class="flex items-center justify-center text-gray-600 text-sm">
+                        <i class="fas fa-shield-alt mr-2 text-green-500"></i>
+                        Secure checkout with 256-bit SSL encryption
+                    </div>
+                </div>
+            </div>
+
+        {% else %}
+            <!-- Empty Cart -->
+            <div class="text-center">
+                <div class="bg-white rounded-xl shadow-lg p-12">
+                    <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-shopping-cart text-4xl text-gray-400"></i>
+                    </div>
+                    
+                    <h2 class="text-3xl font-bold text-gray-900 mb-4">Your cart is empty</h2>
+                    <p class="text-gray-600 text-lg mb-8">Looks like you haven't added any event packages to your cart yet.</p>
+                    
+                    <div class="space-y-4">
+                        <a href="{{ url_for('services') }}" 
+                           class="inline-block bg-gradient-to-r from-primary to-secondary text-white px-8 py-4 rounded-lg font-semibold text-lg hover:from-secondary hover:to-accent transition duration-300 transform hover:scale-105">
+                            <i class="fas fa-gift mr-2"></i>Browse Our Services
+                        </a>
+                        
+                        <div class="text-center">
+                            <p class="text-gray-500 text-sm">Need help choosing? <a href="{{ url_for('contact') }}" class="text-accent hover:underline font-medium">Contact our event specialists</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+{% if cart_items %}
+<!-- Trust Indicators -->
+<section class="py-12 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            <div class="flex items-center justify-center">
+                <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4">
+                    <i class="fas fa-shield-alt text-green-600 text-xl"></i>
+                </div>
+                <div class="text-left">
+                    <h3 class="font-semibold text-gray-900">Secure Payment</h3>
+                    <p class="text-gray-600 text-sm">Your payment information is safe and secure</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center justify-center">
+                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                    <i class="fas fa-phone text-blue-600 text-xl"></i>
+                </div>
+                <div class="text-left">
+                    <h3 class="font-semibold text-gray-900">24/7 Support</h3>
+                    <p class="text-gray-600 text-sm">Get help whenever you need it</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center justify-center">
+                <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-4">
+                    <i class="fas fa-medal text-purple-600 text-xl"></i>
+                </div>
+                <div class="text-left">
+                    <h3 class="font-semibold text-gray-900">Quality Guarantee</h3>
+                    <p class="text-gray-600 text-sm">100% satisfaction guaranteed</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+{% endblock %}

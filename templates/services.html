@@ -1,0 +1,478 @@
+{% extends "base.html" %}
+
+{% block title %}Our Services - Phew !! Event Management{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="bg-gradient-to-r from-primary to-secondary py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-5xl font-bold text-white mb-4">Our Complete Services</h1>
+        <p class="text-xl text-white opacity-90 max-w-4xl mx-auto">
+            From complete event packages to individual service providers - we have everything you need for your perfect event
+        </p>
+    </div>
+</section>
+
+<!-- Navigation Tabs -->
+<section class="bg-white border-b shadow-sm sticky top-16 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-center space-x-8 py-4">
+            <button onclick="showSection('packages')" class="tab-button active px-6 py-2 rounded-full font-semibold transition duration-300" id="packages-tab">
+                <i class="fas fa-gift mr-2"></i>Event Packages
+            </button>
+            <button onclick="showSection('providers')" class="tab-button px-6 py-2 rounded-full font-semibold transition duration-300" id="providers-tab">
+                <i class="fas fa-users mr-2"></i>Service Providers
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- Event Packages Section -->
+<section id="packages-section" class="py-16 bg-gradient-to-br from-yellow-50 to-orange-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl font-bold text-gray-900 mb-4">Complete Event Packages</h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                All-inclusive event management packages designed to make your celebrations unforgettable
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <!-- Birthday Party Package -->
+            <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition duration-300 transform hover:scale-105 overflow-hidden">
+                <div class="bg-gradient-to-r from-pink-400 to-purple-500 p-6 text-center">
+                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-birthday-cake text-pink-500 text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white">{{ event_packages.birthday.name }}</h3>
+                </div>
+                <div class="p-6">
+                    <div class="text-center mb-4">
+                        <span class="text-3xl font-bold text-accent">₹{{ "%.2f"|format(event_packages.birthday.price) }}</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">{{ event_packages.birthday.description }}</p>
+                    <ul class="space-y-2 mb-6">
+                        {% for feature in event_packages.birthday.features %}
+                        <li class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-check text-green-500 mr-2"></i>{{ feature }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <a href="{{ url_for('add_to_cart', service_key='birthday') }}" class="w-full bg-gradient-to-r from-pink-400 to-purple-500 text-white py-3 px-6 rounded-lg font-semibold hover:from-pink-500 hover:to-purple-600 transition duration-300 text-center block">
+                        <i class="fas fa-cart-plus mr-2"></i>Add to Cart
+                    </a>
+                </div>
+            </div>
+
+            <!-- Baby Shower Package -->
+            <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition duration-300 transform hover:scale-105 overflow-hidden">
+                <div class="bg-gradient-to-r from-blue-400 to-cyan-500 p-6 text-center">
+                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-baby text-blue-500 text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white">{{ event_packages.baby_shower.name }}</h3>
+                </div>
+                <div class="p-6">
+                    <div class="text-center mb-4">
+                        <span class="text-3xl font-bold text-accent">₹{{ "%.2f"|format(event_packages.baby_shower.price) }}</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">{{ event_packages.baby_shower.description }}</p>
+                    <ul class="space-y-2 mb-6">
+                        {% for feature in event_packages.baby_shower.features %}
+                        <li class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-check text-green-500 mr-2"></i>{{ feature }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <a href="{{ url_for('add_to_cart', service_key='baby_shower') }}" class="w-full bg-gradient-to-r from-blue-400 to-cyan-500 text-white py-3 px-6 rounded-lg font-semibold hover:from-blue-500 hover:to-cyan-600 transition duration-300 text-center block">
+                        <i class="fas fa-cart-plus mr-2"></i>Add to Cart
+                    </a>
+                </div>
+            </div>
+
+            <!-- Wedding Ceremony Package -->
+            <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition duration-300 transform hover:scale-105 overflow-hidden border-2 border-primary">
+                <div class="bg-gradient-to-r from-red-400 to-pink-500 p-6 text-center relative">
+                    <div class="absolute top-2 right-2 bg-primary text-white px-2 py-1 rounded-full text-xs font-bold">POPULAR</div>
+                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-heart text-red-500 text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white">{{ event_packages.wedding.name }}</h3>
+                </div>
+                <div class="p-6">
+                    <div class="text-center mb-4">
+                        <span class="text-3xl font-bold text-accent">₹{{ "%.2f"|format(event_packages.wedding.price) }}</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">{{ event_packages.wedding.description }}</p>
+                    <ul class="space-y-2 mb-6">
+                        {% for feature in event_packages.wedding.features %}
+                        <li class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-check text-green-500 mr-2"></i>{{ feature }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <a href="{{ url_for('add_to_cart', service_key='wedding') }}" class="w-full bg-gradient-to-r from-red-400 to-pink-500 text-white py-3 px-6 rounded-lg font-semibold hover:from-red-500 hover:to-pink-600 transition duration-300 text-center block">
+                        <i class="fas fa-cart-plus mr-2"></i>Add to Cart
+                    </a>
+                </div>
+            </div>
+
+            <!-- Pre-Wedding Celebration -->
+            <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition duration-300 transform hover:scale-105 overflow-hidden">
+                <div class="bg-gradient-to-r from-purple-400 to-indigo-500 p-6 text-center">
+                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-rings-wedding text-purple-500 text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white">{{ event_packages.pre_wedding.name }}</h3>
+                </div>
+                <div class="p-6">
+                    <div class="text-center mb-4">
+                        <span class="text-3xl font-bold text-accent">₹{{ "%.2f"|format(event_packages.pre_wedding.price) }}</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">{{ event_packages.pre_wedding.description }}</p>
+                    <ul class="space-y-2 mb-6">
+                        {% for feature in event_packages.pre_wedding.features %}
+                        <li class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-check text-green-500 mr-2"></i>{{ feature }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <a href="{{ url_for('add_to_cart', service_key='pre_wedding') }}" class="w-full bg-gradient-to-r from-purple-400 to-indigo-500 text-white py-3 px-6 rounded-lg font-semibold hover:from-purple-500 hover:to-indigo-600 transition duration-300 text-center block">
+                        <i class="fas fa-cart-plus mr-2"></i>Add to Cart
+                    </a>
+                </div>
+            </div>
+
+            <!-- Corporate Events Package -->
+            <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition duration-300 transform hover:scale-105 overflow-hidden">
+                <div class="bg-gradient-to-r from-gray-600 to-gray-800 p-6 text-center">
+                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-briefcase text-gray-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white">{{ event_packages.corporate.name }}</h3>
+                </div>
+                <div class="p-6">
+                    <div class="text-center mb-4">
+                        <span class="text-3xl font-bold text-accent">₹{{ "%.2f"|format(event_packages.corporate.price) }}</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">{{ event_packages.corporate.description }}</p>
+                    <ul class="space-y-2 mb-6">
+                        {% for feature in event_packages.corporate.features %}
+                        <li class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-check text-green-500 mr-2"></i>{{ feature }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <a href="{{ url_for('add_to_cart', service_key='corporate') }}" class="w-full bg-gradient-to-r from-gray-600 to-gray-800 text-white py-3 px-6 rounded-lg font-semibold hover:from-gray-700 hover:to-gray-900 transition duration-300 text-center block">
+                        <i class="fas fa-cart-plus mr-2"></i>Add to Cart
+                    </a>
+                </div>
+            </div>
+
+            <!-- House Party Package -->
+            <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition duration-300 transform hover:scale-105 overflow-hidden">
+                <div class="bg-gradient-to-r from-green-400 to-emerald-500 p-6 text-center">
+                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-home text-green-500 text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white">{{ event_packages.house_party.name }}</h3>
+                </div>
+                <div class="p-6">
+                    <div class="text-center mb-4">
+                        <span class="text-3xl font-bold text-accent">₹{{ "%.2f"|format(event_packages.house_party.price) }}</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">{{ event_packages.house_party.description }}</p>
+                    <ul class="space-y-2 mb-6">
+                        {% for feature in event_packages.house_party.features %}
+                        <li class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-check text-green-500 mr-2"></i>{{ feature }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <a href="{{ url_for('add_to_cart', service_key='house_party') }}" class="w-full bg-gradient-to-r from-green-400 to-emerald-500 text-white py-3 px-6 rounded-lg font-semibold hover:from-green-500 hover:to-emerald-600 transition duration-300 text-center block">
+                        <i class="fas fa-cart-plus mr-2"></i>Add to Cart
+                    </a>
+                </div>
+            </div>
+
+            <!-- Anniversary Celebration -->
+            <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition duration-300 transform hover:scale-105 overflow-hidden">
+                <div class="bg-gradient-to-r from-rose-400 to-pink-500 p-6 text-center">
+                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-heart text-rose-500 text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white">{{ event_packages.anniversary.name }}</h3>
+                </div>
+                <div class="p-6">
+                    <div class="text-center mb-4">
+                        <span class="text-3xl font-bold text-accent">₹{{ "%.2f"|format(event_packages.anniversary.price) }}</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">{{ event_packages.anniversary.description }}</p>
+                    <ul class="space-y-2 mb-6">
+                        {% for feature in event_packages.anniversary.features %}
+                        <li class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-check text-green-500 mr-2"></i>{{ feature }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <a href="{{ url_for('add_to_cart', service_key='anniversary') }}" class="w-full bg-gradient-to-r from-rose-400 to-pink-500 text-white py-3 px-6 rounded-lg font-semibold hover:from-rose-500 hover:to-pink-600 transition duration-300 text-center block">
+                        <i class="fas fa-cart-plus mr-2"></i>Add to Cart
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Service Providers Section -->
+<section id="providers-section" class="py-16 bg-gradient-to-br from-yellow-50 to-orange-50 hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl font-bold text-gray-900 mb-4">Professional Service Providers</h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                Individual service providers to complement your event or create a custom experience
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <!-- House Help Services -->
+            <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition duration-300 transform hover:scale-105 overflow-hidden">
+                <div class="bg-gradient-to-r from-teal-400 to-cyan-500 p-6 text-center">
+                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-hands-helping text-teal-500 text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white">{{ service_providers.house_help.name }}</h3>
+                </div>
+                <div class="p-6">
+                    <div class="text-center mb-4">
+                        <span class="text-3xl font-bold text-accent">₹{{ "%.2f"|format(service_providers.house_help.price) }}</span>
+                        <span class="text-gray-600 text-sm ml-1">{{ service_providers.house_help.unit }}</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">{{ service_providers.house_help.description }}</p>
+                    <ul class="space-y-2 mb-6">
+                        {% for feature in service_providers.house_help.features %}
+                        <li class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-check text-green-500 mr-2"></i>{{ feature }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <a href="{{ url_for('add_to_cart', service_key='house_help') }}" class="w-full bg-gradient-to-r from-teal-400 to-cyan-500 text-white py-3 px-6 rounded-lg font-semibold hover:from-teal-500 hover:to-cyan-600 transition duration-300 text-center block">
+                        <i class="fas fa-cart-plus mr-2"></i>Add to Cart
+                    </a>
+                </div>
+            </div>
+
+            <!-- Professional Waiters -->
+            <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition duration-300 transform hover:scale-105 overflow-hidden">
+                <div class="bg-gradient-to-r from-orange-400 to-red-500 p-6 text-center">
+                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-user-tie text-orange-500 text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white">{{ service_providers.waiters.name }}</h3>
+                </div>
+                <div class="p-6">
+                    <div class="text-center mb-4">
+                        <span class="text-3xl font-bold text-accent">₹{{ "%.2f"|format(service_providers.waiters.price) }}</span>
+                        <span class="text-gray-600 text-sm ml-1">{{ service_providers.waiters.unit }}</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">{{ service_providers.waiters.description }}</p>
+                    <ul class="space-y-2 mb-6">
+                        {% for feature in service_providers.waiters.features %}
+                        <li class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-check text-green-500 mr-2"></i>{{ feature }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <a href="{{ url_for('add_to_cart', service_key='waiters') }}" class="w-full bg-gradient-to-r from-orange-400 to-red-500 text-white py-3 px-6 rounded-lg font-semibold hover:from-orange-500 hover:to-red-600 transition duration-300 text-center block">
+                        <i class="fas fa-cart-plus mr-2"></i>Add to Cart
+                    </a>
+                </div>
+            </div>
+
+            <!-- Expert Bartenders -->
+            <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition duration-300 transform hover:scale-105 overflow-hidden border-2 border-secondary">
+                <div class="bg-gradient-to-r from-purple-500 to-indigo-600 p-6 text-center relative">
+                    <div class="absolute top-2 right-2 bg-secondary text-white px-2 py-1 rounded-full text-xs font-bold">POPULAR</div>
+                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-cocktail text-purple-500 text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white">{{ service_providers.bartenders.name }}</h3>
+                </div>
+                <div class="p-6">
+                    <div class="text-center mb-4">
+                        <span class="text-3xl font-bold text-accent">₹{{ "%.2f"|format(service_providers.bartenders.price) }}</span>
+                        <span class="text-gray-600 text-sm ml-1">{{ service_providers.bartenders.unit }}</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">{{ service_providers.bartenders.description }}</p>
+                    <ul class="space-y-2 mb-6">
+                        {% for feature in service_providers.bartenders.features %}
+                        <li class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-check text-green-500 mr-2"></i>{{ feature }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <a href="{{ url_for('add_to_cart', service_key='bartenders') }}" class="w-full bg-gradient-to-r from-purple-500 to-indigo-600 text-white py-3 px-6 rounded-lg font-semibold hover:from-purple-600 hover:to-indigo-700 transition duration-300 text-center block">
+                        <i class="fas fa-cart-plus mr-2"></i>Add to Cart
+                    </a>
+                </div>
+            </div>
+
+            <!-- Event Decorators -->
+            <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition duration-300 transform hover:scale-105 overflow-hidden">
+                <div class="bg-gradient-to-r from-pink-500 to-rose-500 p-6 text-center">
+                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-paint-brush text-pink-500 text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white">{{ service_providers.decorators.name }}</h3>
+                </div>
+                <div class="p-6">
+                    <div class="text-center mb-4">
+                        <span class="text-3xl font-bold text-accent">₹{{ "%.2f"|format(service_providers.decorators.price) }}</span>
+                        <span class="text-gray-600 text-sm ml-1">{{ service_providers.decorators.unit }}</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">{{ service_providers.decorators.description }}</p>
+                    <ul class="space-y-2 mb-6">
+                        {% for feature in service_providers.decorators.features %}
+                        <li class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-check text-green-500 mr-2"></i>{{ feature }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <a href="{{ url_for('add_to_cart', service_key='decorators') }}" class="w-full bg-gradient-to-r from-pink-500 to-rose-500 text-white py-3 px-6 rounded-lg font-semibold hover:from-pink-600 hover:to-rose-600 transition duration-300 text-center block">
+                        <i class="fas fa-cart-plus mr-2"></i>Add to Cart
+                    </a>
+                </div>
+            </div>
+
+            <!-- Live Musicians -->
+            <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition duration-300 transform hover:scale-105 overflow-hidden">
+                <div class="bg-gradient-to-r from-emerald-500 to-teal-600 p-6 text-center">
+                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-music text-emerald-500 text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white">{{ service_providers.musicians.name }}</h3>
+                </div>
+                <div class="p-6">
+                    <div class="text-center mb-4">
+                        <span class="text-3xl font-bold text-accent">₹{{ "%.2f"|format(service_providers.musicians.price) }}</span>
+                        <span class="text-gray-600 text-sm ml-1">{{ service_providers.musicians.unit }}</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">{{ service_providers.musicians.description }}</p>
+                    <ul class="space-y-2 mb-6">
+                        {% for feature in service_providers.musicians.features %}
+                        <li class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-check text-green-500 mr-2"></i>{{ feature }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <a href="{{ url_for('add_to_cart', service_key='musicians') }}" class="w-full bg-gradient-to-r from-emerald-500 to-teal-600 text-white py-3 px-6 rounded-lg font-semibold hover:from-emerald-600 hover:to-teal-700 transition duration-300 text-center block">
+                        <i class="fas fa-cart-plus mr-2"></i>Add to Cart
+                    </a>
+                </div>
+            </div>
+
+            <!-- After Party Cleaners -->
+            <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition duration-300 transform hover:scale-105 overflow-hidden">
+                <div class="bg-gradient-to-r from-slate-500 to-gray-600 p-6 text-center">
+                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-broom text-slate-500 text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white">{{ service_providers.cleaners.name }}</h3>
+                </div>
+                <div class="p-6">
+                    <div class="text-center mb-4">
+                        <span class="text-3xl font-bold text-accent">₹{{ "%.2f"|format(service_providers.cleaners.price) }}</span>
+                        <span class="text-gray-600 text-sm ml-1">{{ service_providers.cleaners.unit }}</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">{{ service_providers.cleaners.description }}</p>
+                    <ul class="space-y-2 mb-6">
+                        {% for feature in service_providers.cleaners.features %}
+                        <li class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-check text-green-500 mr-2"></i>{{ feature }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <a href="{{ url_for('add_to_cart', service_key='cleaners') }}" class="w-full bg-gradient-to-r from-slate-500 to-gray-600 text-white py-3 px-6 rounded-lg font-semibold hover:from-slate-600 hover:to-gray-700 transition duration-300 text-center block">
+                        <i class="fas fa-cart-plus mr-2"></i>Add to Cart
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Additional Info Section -->
+<section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-xl shadow-lg p-8">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Need Something Custom?</h2>
+                <p class="text-gray-600 text-lg">We also offer custom event packages and can combine any services to meet your specific requirements.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                <div>
+                    <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-phone text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Call Us</h3>
+                    <p class="text-gray-600">Speak directly with our event planners</p>
+                    <p class="text-accent font-semibold mt-2">8789015663</p>
+                </div>
+                
+                <div>
+                    <div class="w-16 h-16 bg-secondary rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-envelope text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Email Us</h3>
+                    <p class="text-gray-600">Get a detailed quote via email</p>
+                    <p class="text-accent font-semibold mt-2">phew.org@gmail.com</p>
+                </div>
+                
+                <div>
+                    <div class="w-16 h-16 bg-accent rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-calendar-alt text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Book Consultation</h3>
+                    <p class="text-gray-600">Schedule a free planning session</p>
+                    <a href="{{ url_for('contact') }}" class="text-accent font-semibold mt-2 inline-block hover:underline">Schedule Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- JavaScript for tab functionality -->
+<script>
+    function showSection(section) {
+        // Hide all sections
+        document.getElementById('packages-section').classList.add('hidden');
+        document.getElementById('providers-section').classList.add('hidden');
+        
+        // Remove active class from all tabs
+        document.getElementById('packages-tab').classList.remove('active');
+        document.getElementById('providers-tab').classList.remove('active');
+        
+        // Show selected section and activate tab
+        if (section === 'packages') {
+            document.getElementById('packages-section').classList.remove('hidden');
+            document.getElementById('packages-tab').classList.add('active');
+        } else if (section === 'providers') {
+            document.getElementById('providers-section').classList.remove('hidden');
+            document.getElementById('providers-tab').classList.add('active');
+        }
+    }
+</script>
+
+<style>
+    .tab-button {
+        @apply bg-gray-100 text-gray-700 hover:bg-primary hover:text-white;
+    }
+    
+    .tab-button.active {
+        @apply bg-gradient-to-r from-primary to-secondary text-white;
+    }
+</style>
+{% endblock %}
